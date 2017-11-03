@@ -6,6 +6,12 @@ import {BikeService} from './bike.service';
   selector: 'app-root',
   template: `
     <h1> {{title}} </h1>
+    <div *ngIf="getNumberOfBikes() <= 10" style="background: red">
+      number of available bikes:  {{getNumberOfBikes()}}
+    </div>
+    <div *ngIf="getNumberOfBikes() > 10" style="background: green">
+      number of available bikes:  {{getNumberOfBikes()}}
+    </div>
     <ul class = "bikes">
       <li *ngFor="let bike of bikes" [class.selected]="bike === selectedBike" (click)="onSelect(bike)">
         <div *ngIf="bike.quantity == 0">
@@ -16,12 +22,6 @@ import {BikeService} from './bike.service';
         </div>
       </li>
     </ul>
-    <div *ngIf="getNumberOfBikes() > 10" style="background: green">
-      number of available bikes:  {{getNumberOfBikes()}}
-    </div>
-    <div *ngIf="getNumberOfBikes() <= 10" style="background: red">
-      number of available bikes:  {{getNumberOfBikes()}}
-    </div>
     <app-bike [bike]="selectedBike"></app-bike>
   `,
   styleUrls: ['./app.component.css']

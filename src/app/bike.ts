@@ -4,5 +4,7 @@ export class Bike {
                public name: string,
                public description: string,
                public quantity: number,
-               public price: number) {}
+               public price: number,
+               public numberOfOrders: number,
+               public imagePath: string) {}
 }
