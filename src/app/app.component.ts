@@ -22,7 +22,7 @@ import {BikeService} from './bike.service';
         </div>
       </li>
     </ul>
-    <app-bike [bike]="selectedBike"></app-bike>
+    <app-bike [bike]="selectedBike" (reservation)="changeReservation($event)" ></app-bike>
   `,
   styleUrls: ['./app.component.css']
 })
@@ -30,12 +30,14 @@ export class AppComponent implements OnInit {
   title = 'Bike offers';
   bikes: Bike[] = [];
   selectedBike: Bike;
+  availableBikes: number;
 
   constructor(private bikeService: BikeService) {
   }
 
   getBikes(): void {
     this.bikeService.getBikes().then(bikes => this.bikes = bikes);
+    this.availableBikes = this.bikes.reduce((sum, value) => sum + value.quantity, 0);
   }
 
   ngOnInit(): void {
@@ -52,5 +54,8 @@ export class AppComponent implements OnInit {
       result += bike.quantity;
     }
     return result;
+  }
+  changeReservation(howMuch: number): void {
+    this.availableBikes += howMuch;
   }
 }

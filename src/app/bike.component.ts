@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Bike} from './bike';
 
 
@@ -44,16 +44,19 @@ import {Bike} from './bike';
 })
 export class BikeComponent {
   @Input() bike: Bike;
+  @Output() reservation = new EventEmitter<number>();
   increaseOrder(): void {
     if (this.bike.quantity > 0) {
       this.bike.quantity --;
-      this.bike.numberOfOrders ++;
+      this.bike.numberOfOrders++;
+      this.reservation.emit(1);
     }
   }
   decreaseOrder(): void {
     if (this.bike.numberOfOrders > 0) {
-      this.bike.numberOfOrders --;
       this.bike.quantity ++;
+      this.bike.numberOfOrders--;
+      this.reservation.emit(-1);
     }
   }
 }
